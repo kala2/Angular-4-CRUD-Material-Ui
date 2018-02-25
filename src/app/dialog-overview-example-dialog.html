@@ -1,0 +1,10 @@
+<div mat-dialog-content style="width: 100%; text-align: center;">
+  <p>Edit entry <span style="font-weight: bold;">{{data.postText}}</span></p>
+  <mat-form-field style="width: 100%;">
+    <input matInput [(ngModel)]="data.postText">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions style="width: 100%;">
+  <button mat-button (click)="onNoClick()" style="width: 50%;">Close</button>
+  <button mat-button (click)="onUpdateClick(data)" [mat-dialog-close]="data.postText" cdkFocusInitial style="width: 50%;">Update</button>
+</div>
