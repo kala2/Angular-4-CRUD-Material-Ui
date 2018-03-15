@@ -8,9 +8,9 @@ import { Observable } from 'rxjs/Rx';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
+import * as _ from 'lodash';
 
 @Injectable()
-
 
 /** @title Sidenav with custom escape and backdrop click behavior */
 @Component({
@@ -20,40 +20,66 @@ import 'rxjs/add/operator/do';
 })
 
 export class PostList {
-
+  USER = JSON.parse(localStorage.getItem('currentUser'));
   title = 'app';
   posts: any[] = [];
-  post:any = {};
-  postId:any = {};
+  x: any[] = [];
+  post: any = {};
+  postId: any = {};
+  liked: boolean = false;
   promiseSetBySomeAction:any;
+  clicked: boolean = false;
   private postItem;
 
   constructor(private postService: PostService, public dialog: MatDialog) {  }
 
-  addPost(post:any) {
-    
-      if(!post){ 
-        return; 
-      } else {
-        return this.promiseSetBySomeAction = this.postService.addPost(post)
-        .then(td => {
-          console.log(td);
-          this.posts.push(td.post);
-        });
-      }
-  }
-
-  deletePost(post:any) {
-
+  addNewLike(post:any, username: any) {
     if(!post){ 
       return; 
     } else {
-      return this.promiseSetBySomeAction = this.postService.deletePost(post._id)
+      console.log("post is : ", post);
+      console.log("username is : ", username);
+
+      if (_.includes(post.likedFrom, this.USER.userName)) {
+        return this.promiseSetBySomeAction = this.postService.removeLike(post, username, this.USER)
+        .then(td => {
+          for (let i in this.posts) {
+            if (this.posts[i].userName == username) {
+              console.log("i am in and found match", this.posts[i].userName);
+              this.posts[i].Posts = td;
+            }
+          }
+        });
+      } else {
+        return this.promiseSetBySomeAction = this.postService.addNewLike(post, username, this.USER)
+        .then(td => {
+          for (let i in this.posts) {
+            if (this.posts[i].userName == username) {
+              console.log("i am in and found match", this.posts[i].userName);
+              this.posts[i].Posts = td;
+            }
+          }
+        });
+      }        
+    }
+  }
+
+  deletePost(post:any) {
+    if(!post){ 
+      return; 
+    } else {
+      var i = 0;
+      var temp1 = [];
+      var temp2 = [];
+      return this.promiseSetBySomeAction = this.postService.deletePost(post, this.USER)
       .then(td => {
-        console.log(td._id);
-        const filteredPosts = this.posts.filter(t => t._id !== td._id);
-        this.posts = filteredPosts;
-      })
+        for (let i in this.posts) {
+          if (this.posts[i].userName == this.USER.userName) {
+            console.log("i am in and found match", this.posts[i].userName);
+            this.posts[i].Posts = td;
+          }
+        }
+      });
     }
   }
 

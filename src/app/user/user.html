@@ -1,0 +1,138 @@
+<navbar></navbar>
+
+<mat-grid-list cols="12" gutterSize="0px">
+    <mat-grid-tile [colspan]="12" [rowspan]="4" class="coverImageBackground" [style.background]="'url(http://localhost:3001/uploads/' + user.profileCover + ')'"></mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="1" class="mat-grid-avatar-user">
+        <img mat-card-avatar class="example-header-image user-example-header-image" src="http://localhost:3001/uploads/{{user.profileImage}}" alt="MISSING JPG" />
+        <h4 class="user_name_h4">{{user.firstName}} {{user.lastName}}</h4>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="8" [rowspan]="1">
+        Three
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="12" style="padding:20px" gutterSize="20px">
+    <mat-grid-tile [colspan]="3" [rowspan]="2" class="user_about_me">
+        <div style="padding-left: 20px; padding-right: 20px;">
+            <div style="width: 100%;">
+                <h4 style="font-size: 24px; font-weight: 300;">TWO</h4>
+            </div>
+            <p>I am a very simple card. I am good at containing small bits of information. I am convenient because I require little markup to use effectively.</p>
+        </div>
+    </mat-grid-tile>
+
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" [style.background]="'lightblue'">  
+        Two
+    </mat-grid-tile> -->
+    
+    <mat-grid-tile [colspan]="9" [rowspan]="3.5" class="demo-grid-tile">
+        <mat-tab-group class="demo-tab-group" style="flex-basis: 0; flex-grow: 1;">
+            <mat-tab label="Tab 1">
+                <div class="mat_tab_1">
+                    <ng-template mat-tab-label>
+                        <mat-icon>mode_edit</mat-icon> <span style="text-transform: uppercase; font-size: 15px;">Update Status</span>
+                    </ng-template>
+                    <div class="demo-tab-content">
+                        <div class="signin-content add_new_post">
+                            <mat-card>
+                                <mat-card-content>
+                                    <form (ngSubmit)="addPost(postText);todoForm.reset()" #todoForm="ngForm">
+                                        <mat-input-container class="full-width-input">
+                                            <mat-form-field style="width: 100%;">
+                                                <textarea matInput [froalaEditor] [(froalaModel)]="postText" [(ngModel)]="postText" id="postText" name="postText" #posttext="ngModel"></textarea>
+                                            </mat-form-field>
+                                            <!-- <mat-error *ngIf="isFieldInvalid(post.postText)">
+                                            Please add your post
+                                            </mat-error> -->
+                                        </mat-input-container>
+                                        <!-- <mat-input-container class="full-width-input">
+                                            <input matInput type="password" placeholder="Password" 
+                                                formControlName="password" required>
+                                            <mat-error *ngIf="isFieldInvalid('userName')">
+                                            Please inform your password
+                                            </mat-error>
+                                        </mat-input-container> -->
+                                        <button mat-raised-button color="primary" [promiseBtn]="promiseSetBySomeAction">New Post</button>
+                                    </form>
+                                </mat-card-content>
+                            </mat-card>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Tab 2">
+                <ng-template mat-tab-label>
+                <mat-icon>face</mat-icon> <span style="text-transform: uppercase; font-size: 15px;">Update Profle Picture</span>
+                </ng-template>
+                <div class="demo-tab-content">
+                    <input type="file" name="fileUpload" id="fileUpload" multiple ng2FileSelect [uploader]="uploader">
+                    <div *ngFor="let item of uploader.queue">
+                        {{item.file.name}}
+                        <div [ngStyle]="{'width': item.progress+'%'}"></div>
+                        <button type="button" (click)="item.upload()">Upload</button>
+                        <button type="button" (click)="item.remove()">Remove</button>
+                    </div>
+                    <div *ngFor="let item of attachmentList">
+                            {{item.originalname}}
+                    </div>
+                </div>  
+            </mat-tab>
+            <mat-tab label="Tab 3">
+                    <ng-template mat-tab-label>
+                        <mat-icon>camera_enhance</mat-icon> <span style="text-transform: uppercase; font-size: 15px;">Update Cover Picture</span>
+                    </ng-template>
+                    <div class="demo-tab-content">
+                        <input type="file" name="fileUpload" id="fileUpload" multiple ng2FileSelect [uploader]="coverUploader">
+                        <div *ngFor="let item of coverUploader.queue">
+                            {{item.file.name}}
+                            <div [ngStyle]="{'width': item.progress+'%'}"></div>
+                            <button type="button" (click)="item.upload()">Upload</button>
+                            <button type="button" (click)="item.remove()">Remove</button>
+                        </div>
+                        <div *ngFor="let item of coverAttachmentList">
+                                {{item.originalname}}
+                        </div>
+                    </div>  
+            </mat-tab>
+        </mat-tab-group>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<div class="listContainer">
+    <div *ngFor="let post of user.Posts">
+        <div class="padding_left_mat_card_user">
+            <mat-card class="example-card">
+                <mat-card-header>
+                    <img mat-card-avatar class="example-header-image" src="http://localhost:3001/uploads/{{user.profileImage}}" />
+                    <mat-card-title>{{user.userName}}</mat-card-title>
+                    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+                    <span class="post_buttons">
+                        <button mat-button (click)="openDialog(post); $event.stopPropagation()"><mat-icon>edit</mat-icon> Edit</button>
+                        <button mat-button (click)="deletePost(post); $event.stopPropagation()"><mat-icon>delete</mat-icon> Delete</button>  
+                    </span>
+                </mat-card-header>
+                <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+                <mat-card-content>
+                <p [froalaView]="post.postText">
+                        {{post.postText}}     
+                </p>
+                </mat-card-content>
+                <mat-card-actions>
+                <button mat-button (click)="addNewLike(post, user.userName); $event.stopPropagation()">
+                    
+                    <mat-icon *ngIf="post.likedFrom.indexOf(this.USER.userName) == -1; else other_content">thumb_up</mat-icon>
+                </button>
+                <ng-template #other_content>
+                        <mat-icon class="liked_post">thumb_up</mat-icon>
+                </ng-template>
+                <share-buttons [theme]="'outline'"
+                    [include]="['facebook','twitter']"
+                    [show]="2"
+                    [size]="-1"
+                    [url]="'http://twitter.com/'"
+                ></share-buttons>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div >
+</div>

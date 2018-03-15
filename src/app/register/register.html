@@ -1,0 +1,72 @@
+<h1 style="text-align:center;">Fill out the fields to complete the Registration</h1>
+<mat-horizontal-stepper [linear]="isLinear" #stepper="matHorizontalStepper">
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Fill out your name</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName" required>
+        </mat-form-field><br/>
+        <mat-form-field>
+            <input matInput placeholder="Last name" formControlName="lastName" required>
+          </mat-form-field><br/>
+          <mat-form-field>
+            <input matInput placeholder="Address" formControlName="address" required>
+          </mat-form-field><br/>
+          <mat-form-field>
+              <input matInput placeholder="Telephone" formControlName="telephone" required>
+          </mat-form-field>
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Fill out your email address</ng-template>
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required>
+        </mat-form-field>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Fill out your username</ng-template>
+          <mat-form-field>
+              <input matInput placeholder="Username" formControlName="userName" required>
+            </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+    </mat-step>
+    <mat-step [stepControl]="fourthFormGroup">
+        <form [formGroup]="fourthFormGroup">
+            <ng-template matStepLabel>Fill out your password</ng-template>
+        
+          <mat-form-field>
+              <input matInput placeholder="Password" formControlName="password" required>
+            </mat-form-field><br/>
+            <mat-form-field>
+                <input matInput placeholder="Confirm your Password" formControlName="passwordConfirm" required>
+              </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button (click)="registerUser()">Register</button>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+</mat-horizontal-stepper>

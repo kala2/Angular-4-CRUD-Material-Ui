@@ -1,7 +1,9 @@
-<div mat-dialog-content style="width: 100%; text-align: center;">
-  <p>Edit entry <span style="font-weight: bold;">{{data.postText}}</span></p>
+<div mat-dialog-content style="width: 100%; text-align: center;" class="edit_post">
+  <p>Edit entry</p>
+  <!-- <span [froalaView]="post.postText">{{post.postText}}</span> -->
   <mat-form-field style="width: 100%;">
-    <input matInput [(ngModel)]="data.postText">
+    <!-- <input matInput [(ngModel)]="data.postText"> -->
+    <textarea matInput [froalaEditor] [(ngModel)]="data.postText"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions style="width: 100%;">

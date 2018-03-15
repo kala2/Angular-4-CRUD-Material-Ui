@@ -1,11 +1,6 @@
-# Angular 4 CRUD with Material UI
+# Angular4Training
 
-Angular 4 CRUD operations using REST API, MongoDB and Material UI.
-
-Create New Post
-Read New Post
-Update Existing Post
-Delete Posts
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.7.
 
 ## Development server
 
